@@ -1,0 +1,15 @@
+---
+# run task on the host and gather facts and print on the template
+- name: get os details
+  hosts: localhost
+  vars_files:
+   - /home/ec2-user/playbooks/myrole/vars/main.yml
+  tasks:
+   - name: get OS Details
+     shell: uname -a
+     register: out
+   - name: render my template
+     template:
+       src: /home/ec2-user/playbooks/myrole/templates/my_template.conf.j2
+       dest: ~/my-template.txt
+     become: true
